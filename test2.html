@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<p><strong>Focus another tab or window</strong>, and watch the log below.
+<pre id="pre"></pre>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script src="//rawgithub.com/mathiasbynens/jquery-visibility/v1.0.7/jquery-visibility.js"></script>
+
+<script>
+$(function() {
+
+		function log(text) {
+		var $pre = $('pre');
+		var time = new Date();
+		var timeLog = (
+		("0" + time.getHours()).slice(-2) + ":" + 
+		("0" + time.getMinutes()).slice(-2) + ":" + 
+		("0" + time.getSeconds()).slice(-2)); 
+
+		$pre.append(timeLog + " " + text + '<br>');
+		}
+
+		window.addEventListener("focus", visible, false);
+		window.addEventListener("blur", invisible, false);
+
+		function visible() {
+		log('The page gained visibility; the <code>show</code> event was triggered.');
+		}
+
+		function invisible() {
+		log('The page lost visibility; the <code>hide</code> event was triggered.');
+		}
+
+});
+</script>
+
