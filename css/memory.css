@@ -1,0 +1,25 @@
+#memory_board{ 
+	 background:#CCC; 
+	 border:#999 1px solid; 
+	 width:808px; 
+	 height:808px; 
+	 margin: auto auto; 
+} 
+
+#memory_board > div{ 
+	 background: url(../img/tile_bg.jpg);
+	 background-size: 180px;
+	 border:#000 1px solid; 
+/*
+ * Tile size: 180px x 180px
+ */
+	 width:108px;
+	 height: 36px; 
+	 float:left;
+	 margin:10px;
+	 padding:71px 36px; 
+	 cursor:pointer; 
+	 text-align:center; 
+
+	 position: relative;
+} 
