@@ -1,6 +1,7 @@
 /*
 * GLOBAL VARIABLES
 */
+
 // The formulas
 var formulas = [] 
 // The x-values
@@ -11,62 +12,51 @@ var cleared = 0;
 * GLOBAL FUNCTIONS
 */
 
-function randInt(min,max) {
-	 return Math.floor(Math.random()*(max-min+1)+min);
-}
-
-function generateFormulas(difficulty) {
-	 // Clear previous results
-	 formulas.length = 0;
-	 xvalues.length = 0;
-
-	 // Generate the formulas
-	 for(i=2; i < 10; i++) {
-			do {
-				 var first = randInt(0,i);
-				 var second = randInt(0,i);
-			} while ((first+second) != i );
-			do {
-				 var third = randInt(0,i);
-				 var fourth = randInt(0,i);
-			} while (third+fourth != first+second || 
-				 third == first || third == second || fourth == first || fourth == second
-			); 
-
-			// Save the generated formulas + values
-			formulas.push(first + ' + ' + second + ' = X');
-			formulas.push(third + ' + ' + fourth + ' = X');
-			xvalues.push(first+second);
-			xvalues.push(third+fourth);
-	 }
-
-}
-
 /*
 * MAIN LOOP
 */
 
-$(document).ready(function() {
+//Load the required scripts
+$.when(
+	$.getScript( "/js/memory.js" ),
+	$.getScript( "/js/algebra.js" ),
+	$.Deferred(function( deferred ){
+		$( deferred.resolve );
+	})
 
-	 //Load the memory script
-	 $.getScript("js/memory.js", function(){
+	// Execute code
+).done(function(){
 
+	var counter = 0;
+	// Loop for future boards
+	var refreshID = setInterval(function() {
+
+
+		if(counter == 0) 
 			// Set up first board
-			generateFormulas(1); 
-			newBoard();
-			var counter = 0;
+		{
+			counter++;
+			generateFormulas(counter); 
 
-			// Loop for future boards
-			var refreshID = setInterval(function() {
-				 console.log('counter '+counter);
-				 if(cleared == 1) {
-						alert("Board cleared... generating new board"); 
-						generateFormulas(1); 
-						newBoard();
-						cleared = 0;
-						counter++;
-				 }
-				 if(counter == 2) clearInterval(refreshID);
-			}, 500);
-	 });
+			console.log('counter '+counter);
+			console.log(formulas);
+			console.log(xvalues);
+			
+			newBoard();
+		} else if (cleared == 1 )
+		{
+			counter++;
+			alert("Board cleared... generating new board"); 
+			generateFormulas(counter); 
+
+			console.log('counter '+counter);
+			console.log(formulas);
+			console.log(xvalues);
+
+			newBoard();
+			cleared = 0;
+		} 
+		if(counter == 4) clearInterval(refreshID);
+
+	}, 500);
 });
