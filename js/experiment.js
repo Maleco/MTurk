@@ -17,7 +17,7 @@ function formatTime(time) {
 			("0" + time.getMinutes()).slice(-2) + ":" + 
 			("0" + time.getSeconds()).slice(-2)); 
 
-	return timeLog;
+		return timeLog;
 }
 
 function visible() {
@@ -30,22 +30,22 @@ function invisible() {
 
 // Fisher-Yates shuffle
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex ;
+	var currentIndex = array.length, temporaryValue, randomIndex ;
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
 
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
 
-  return array;
+	return array;
 }
 /*
 * MAIN LOOP
@@ -70,45 +70,47 @@ $.when(
 	var counter = -1;
 	var startTime = new Date();
 
+	// Randomize block order
 	var init = shuffle([1, 2, 3]);
 	console.log(init);
+
 	var difficulty = init[0];
-	
+
 	// Loop for future boards
 	var refreshID = setInterval(function() 
 	{
 		// Stop 
 		if (counter == 2 && cleared == 1) 
 		{
-			// Go to final page
+			// Go to next page
 			window.location.replace("http://www.google.com");
 		}
 		// Set up first board
-		else if(counter == -1) 
-		{
-			counter++;
-			generateFormulas(difficulty); 
+	else if(counter == -1) 
+	{
+		counter++;
+		generateFormulas(difficulty); 
 
-			console.log('counter '+counter);
-			console.log(formulas);
-			console.log(xvalues);
-			
-			newBoard();
-		} 
-		// Set up a new board
-		else if (cleared == 1 )
-		{
-			cleared = 0;
-			counter++;
-			difficulty = init[counter];
-			alert("Board cleared... generating new board"); 
-			generateFormulas(difficulty); 
+		console.log('counter '+counter);
+		console.log(formulas);
+		console.log(xvalues);
 
-			console.log('counter '+counter);
-			console.log(formulas);
-			console.log(xvalues);
+		newBoard();
+	} 
+	// Set up a new board
+else if (cleared == 1 )
+{
+	cleared = 0;
+	counter++;
+	difficulty = init[counter];
+	alert("Board cleared... generating new board"); 
+	generateFormulas(difficulty); 
 
-			newBoard();
-		} 
+	console.log('counter '+counter);
+	console.log(formulas);
+	console.log(xvalues);
+
+	newBoard();
+} 
 	}, 500);
 });
