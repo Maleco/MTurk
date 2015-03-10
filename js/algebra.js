@@ -53,7 +53,7 @@ function generateFormulas(difficulty)
 	// "6" <2,9>, X = <2,9>, "4" <2,9>
 	{
 		for(i=2; i < 10; i++) {
-			var first  = randInt(2,9);
+			var first  = randInt(2,4);
 			var second = randInt(2,9);
 			do {
 				var third = randInt(2,9);

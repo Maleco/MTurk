@@ -3,25 +3,33 @@ var backgroundLocation = "url(../img/tile_bg.jpg)"
 // Board variables
 var last_flipped_id = -1;
 var tiles_flipped = 0; 
+var tiles_cleared = []; 
 
-// Shuffle the tiles
-Array.prototype.memory_tile_shuffle = function(){ 
-	 var i = this.length, j, temp; 
-	 while(--i > 0){ 
-			j = Math.floor(Math.random() * (i+1)); 
-			temp = this[j]; 
-			this[j] = this[i]; 
-			this[i] = temp; 
-	 } 
-} 
 
 // Create a new board
 function newBoard(){ 
-	 //memory_formulas.memory_tile_shuffle(); 
+	 // Reset the counter
+	 for(var i = 0; i < 16; i++)
+			tileClickCount[i] = 0;
+	 // Reset the variables
+	 last_flipped_id = -1;
+	 tiles_flipped = 0; 
+	 tiles_cleared = []; 
+
+	 // Shuffle the formulas
+	 var formulasAndXValues = [];
+	 for (var i = 0; i < formulas.length; i++)
+			formulasAndXValues.push({"id": i, "formula": formulas[i], "xval": xvalues[i]});
+
+	 // Shuffle the order
+	 //formulasAndXValues = shuffle(formulasAndXValues);
 
 	 var output = ''; 
-	 for(var	i = 0; i < formulas.length; i++)
-			output += '<div id="tile_'+i+'" onclick="memoryFlipTile(this,\''+i+'\')"></div>'; 
+	 for(var i = 0; i < formulas.length; i++)
+	 {
+			var obj = formulasAndXValues[i];
+			output += '<div id="tile_' +obj["id"]+ '" onclick="memoryFlipTile(this,\''+obj["id"]+'\')"></div>'; 
+	 }
 
 	 document.getElementById('memory_board').innerHTML = output; 
 } 
@@ -34,6 +42,12 @@ function flipBack(){
 } 
 
 function clearTiles(id1, id2) {
+	 // Report a match (3) or lucky match(4)
+	 if (tileClickCount[id1] == 0 && tileClickCount[id2] == 0 )
+			CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 4, id2]);
+	 else
+			CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 3, id2]); 
+
 	 var tile_1 = document.getElementById("tile_" + id1); 
 	 var tile_2 = document.getElementById("tile_" + id2); 
 	 tile_1.style.background = '#FFF'; 
@@ -42,18 +56,44 @@ function clearTiles(id1, id2) {
 	 tile_2.innerHTML = '<div class="text">MATCHED!</div>'; 
 	 tiles_flipped += 2; 
 	 last_flipped_id = -1;
+	 tiles_cleared.push(id1);
+	 tiles_cleared.push(id2);
 }
 
-function memoryFlipTile(tile,val){ 
-	 // Check if new flipped matches last flipped tile
-	 // Else flip new tile
-	 if(last_flipped_id != -1 && xvalues[last_flipped_id] == xvalues[val]) {
-			clearTiles(last_flipped_id, val);
-	 } else {
-			if (last_flipped_id != -1) flipBack();
-			tile.style.background = '#FFF'; 
-			tile.innerHTML = '<div class="text">' + formulas[val] + '</div>'; 
-			last_flipped_id = val;
+function memoryFlipTile(tile, id){ 
+	 if (tiles_cleared.indexOf(id) == -1)
+	 {
+			// On new flip
+			if (last_flipped_id != id)
+			{
+				 // Update flip counter
+				 tileClickCount[id]++;
+				 console.log(formatTime(new Date()) + " Flipped tile: " + id);
+			}
+
+
+			if (last_flipped_id != -1 && last_flipped_id != id && 
+						xvalues[last_flipped_id] == xvalues[id]
+				 ) 
+				 // Check if new flipped matches last flipped tile
+			{
+				 clearTiles(last_flipped_id, id);
+			} else 
+				 // Else flip new tile
+			{
+				 if (last_flipped_id != -1) flipBack();
+
+				 // Report the new(1) or revisited(2) flip 
+				 if (tileClickCount[id] == 1)
+						CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 1, id]);
+				 else
+						CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 2, id]); 
+
+				 // Update tile image
+				 tile.style.background = '#FFF'; 
+				 tile.innerHTML = '<div class="text">' + formulas[id] + '</div>'; 
+				 last_flipped_id = id;
+			}
 	 }
 
 	 // Check if board is cleared
