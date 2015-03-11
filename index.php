@@ -9,6 +9,11 @@
 <body>
 	 <div id="mainContent" class="content">
 			<form id="form" method="post" action="too_young.php" class="form">
+				 <div id="mTurkID">
+						<h1>What's your MTurk Worker ID?</h1>
+						<h2>You can find it out at: https://www.mturk.com/mturk/dashboard</h2> 
+						<input type="text" name="mturkID" id="mturkID" size="20">
+				 </div>
 				 <div id="ageSection">
 						<h1>What's your age?</h1>
 						<input type="text" name="age" id="inputAge" size="3">

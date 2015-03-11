@@ -6,7 +6,7 @@
 
 // LOG EVERYTHING YOU CAN LOG
 // Logging to csv, columns:
-// Time (ms), Participant, P_Age, P_Gender, Level, Block, Trialnr, Move, Card
+// Time (ms), Participant, P_Age, P_Gender, Difficulty, Block, Trialnr, Move, Card
 // Move: 1 = newCard, 2 = Revisit, 3 = Match, 4 = Lucky Match, 5 = Focus lost, 6 = Focus gained
 var CSVdata = []
 // The formulas
@@ -23,7 +23,7 @@ var trialCounter = 0;
 var difficulty;
 
 var startTime = new Date();
-var age, gender;
+var age, gender, mturkID;
 /*
  * GLOBAL FUNCTIONS
  */
@@ -41,14 +41,19 @@ function getMS () {
 	 return new Date() - startTime;
 }
 
+function saveToCSV (action, cardID) {
+	 if (!cardID) var cardID = "";
+	 CSVdata.push([getMS(), mturkID, age, gender, difficulty, blockCounter, trialCounter, action, cardID]); 
+}
+
 function visible() {
 	 console.log([getMS(), age, gender, difficulty, blockCounter, trialCounter, 6, ""]); 
-	 CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 6, ""]); 
+	 saveToCSV(6);
 }
 
 function invisible() {
 	 console.log([getMS(), age, gender, difficulty, blockCounter, trialCounter, 5, ""]); 
-	 CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 5, ""]); 
+	 saveToCSV(5);
 }
 
 // Fisher-Yates shuffle
@@ -84,15 +89,16 @@ function saveTrial(startTime, stopTime)
 	return trial;
 }
 
-function saveData(data)
+function saveData(json)
 {
 	 $.ajax({
 			type:'post',
+			cache: false,
 			url: 'savedata.php',
-			data: {data: data},
+			data: {data: json},
 			complete: function(data) {
 				 window.location.href = "thanks.php";
-			}
+		}
 	 });
 }
 /*
@@ -117,6 +123,7 @@ $.when(
 
 	 age = document.getElementById("user_age").textContent.trim();
 	 gender = document.getElementById("user_gender").textContent.trim();
+	 mturkID = document.getElementById("mturkID").textContent.trim();
 
 	var trialStartTime,trialStopTime;
 	// Randomize block order

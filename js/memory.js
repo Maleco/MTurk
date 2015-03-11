@@ -44,9 +44,9 @@ function flipBack(){
 function clearTiles(id1, id2) {
 	 // Report a match (3) or lucky match(4)
 	 if (tileClickCount[id1] == 0 && tileClickCount[id2] == 0 )
-			CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 4, id2]);
+			saveToCSV(4, id2);
 	 else
-			CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 3, id2]); 
+			saveToCSV(3, id2);
 
 	 var tile_1 = document.getElementById("tile_" + id1); 
 	 var tile_2 = document.getElementById("tile_" + id2); 
@@ -85,9 +85,9 @@ function memoryFlipTile(tile, id){
 
 				 // Report the new(1) or revisited(2) flip 
 				 if (tileClickCount[id] == 1)
-						CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 1, id]);
+						saveToCSV(1, id);
 				 else
-						CSVdata.push([getMS(), age, gender, difficulty, blockCounter, trialCounter, 2, id]); 
+						saveToCSV(2, id);
 
 				 // Update tile image
 				 tile.style.background = '#FFF'; 
