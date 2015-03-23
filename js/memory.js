@@ -1,3 +1,4 @@
+// Load the background image for the cards
 var backgroundLocation = "url(../img/tile_bg.jpg)"
 
 // Board variables
@@ -13,6 +14,7 @@ function newBoard(){
 			tileClickCount[i] = 0;
 	 // Reset the variables
 	 last_flipped_id = -1;
+
 	 tiles_flipped = 0; 
 	 tiles_cleared = []; 
 
@@ -22,7 +24,7 @@ function newBoard(){
 			formulasAndXValues.push({"id": i, "formula": formulas[i], "xval": xvalues[i]});
 
 	 // Shuffle the order
-	 //formulasAndXValues = shuffle(formulasAndXValues);
+	 formulasAndXValues = shuffle(formulasAndXValues);
 
 	 var output = ''; 
 	 for(var i = 0; i < formulas.length; i++)
@@ -65,12 +67,8 @@ function memoryFlipTile(tile, id){
 	 {
 			// On new flip
 			if (last_flipped_id != id)
-			{
 				 // Update flip counter
 				 tileClickCount[id]++;
-				 console.log(formatTime(new Date()) + " Flipped tile: " + id);
-			}
-
 
 			if (last_flipped_id != -1 && last_flipped_id != id && 
 						xvalues[last_flipped_id] == xvalues[id]

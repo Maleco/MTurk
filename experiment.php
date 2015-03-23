@@ -14,5 +14,9 @@
 	 <div style="display: none;" id="user_gender"><?php echo htmlspecialchars($_POST["gender"]); ?></div>
 	 <div style="display: none;" id="mturkID"><?php echo htmlspecialchars($_POST["mturkID"]); ?></div>
 	 <div id="memory_board"></div> 
+
+	 <form id="form" action="thanks.php" method="post">
+			<input type="hidden" id="hashForm" name="hash" value="">
+	 </form>
 </body> 
 </html>

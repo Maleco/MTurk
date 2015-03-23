@@ -1,5 +1,3 @@
-<!doctype html>
-Hallo
 <?php
 	 // Connect to db via shielded file
 	 require('../dbMTurk.php');
@@ -14,6 +12,7 @@ Hallo
 			$gender = $data[0][3];	
 
 			$hash = hash('sha256', $id . $mturkID . $age . $gender);
+			echo $hash;
 
 			//$data = $conn->query('SELECT * FROM MTurk' );
 			$stmt = $conn->prepare("INSERT 
@@ -36,4 +35,3 @@ Hallo
 			fclose($fp);
 	 } 
 ?>
-
