@@ -202,5 +202,6 @@ $.when(
 					newBoard();
 					trialStartTime = new Date();
 				} 
+				$('h1').text("Current Block: " + blockCounter+1);
 			}, 300);
 });
