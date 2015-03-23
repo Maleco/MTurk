@@ -27,7 +27,7 @@ var difficulty;
 
 // Block time (ms) 
 //              minutes * seconds * ms
-var blockTime = 5       * 60      *  1000;
+var blockTime = 15      * 60      *  1000;
 
 // The Counters
 var blockCounter = -1;
@@ -35,6 +35,7 @@ var trialCounter = 0;
 
 
 var startTime = new Date();
+var curBlockTime;
 var age, gender, mturkID;
 
 var trialStartTime,trialStopTime;
@@ -60,6 +61,7 @@ function formatTime(time) {
 
 // Return time in ms since start experiment 
 function getTime () { return new Date() - startTime; }
+function getBlockTime () { return new Date() - curBlockTime; }
 
 // Log the data to a csv
 function saveToCSV (action, cardID) {
@@ -154,7 +156,8 @@ $.when(
 					generateFormulas(difficulty); 
 
 					newBoard();
-					trialStartTime = new Date();
+					curBlockTime = new Date()
+					trialStartTime = curBlockTime;
 				} 
 				// Set up a new board
 				else if (cleared == 1 )
@@ -166,20 +169,20 @@ $.when(
 					trialTimes[difficulty].push(trialStopTime - trialStartTime);
 
 					// Log the trial data and times
-					console.log("Trial time:  " +(trialStopTime - trialStartTime) + 'ms');
-					console.log("Average trial time: " + getAvgTrialTime(difficulty) + "ms");
-					console.log("Total trial time: " + getTime() + "ms");
-					console.log("blockCounter " + blockCounter);
+					//console.log("Trial time:  " +(trialStopTime - trialStartTime) + 'ms');
+					//console.log("Average trial time: " + getAvgTrialTime(difficulty) + "ms");
+					//console.log("Total trial time: " + getTime() + "ms");
+					//console.log("blockCounter " + blockCounter);
 
 					// Update the trial
 					trialCounter++;
 
-
 					// Check if blockCounter has to be incremented 
 					// Increment if there is enough time for another average game
-					if (getTime(difficulty) + getAvgTrialTime(difficulty) >= blockTime * (blockCounter+1) )
+					if (getBlockTime() + getAvgTrialTime(difficulty) >= blockTime )
 					{
 						blockCounter++;
+						curBlockTime = new Date()
 						if (blockCounter < 3) difficulty = diffOrder[blockCounter];
 					}
 
