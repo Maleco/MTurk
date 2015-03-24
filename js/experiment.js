@@ -1,5 +1,6 @@
 /* TODO
- * 	pay $2 + 0.10$ per completed trial with < 20 moves
+ * 	Freeze the game after each click
+ * 	pay $2 + 0.10$ per completed trial with < 30 moves
  * 	12 HIT'S - 2 for each possibility
  * 	Instructions:
  * 		takes 1 hour
@@ -74,6 +75,13 @@ function formatTime(time) {
 	return timeLog;
 }
 
+function pauseComp(millis)
+ {
+  var date = new Date();
+  var curDate = null;
+  do { curDate = new Date(); }
+  while(curDate-date < millis);
+}
 // Return time in ms since start experiment 
 function getTime () { return new Date() - startTime; }
 function getBlockTime () { return new Date() - curBlockTime; }
@@ -94,6 +102,14 @@ function getAvgTrialTime (difficulty)
 		counter++;
 	}
 	return sum/counter
+}
+
+// Sum the number of clicks
+function sumClicks () {
+	var sum = 0;
+	for (index = 0; index < tileClickCount.length ; index++)
+		sum += tileClickCount[index];
+	return sum
 }
 
 // Visible and invisible loggers 
@@ -185,6 +201,12 @@ $.when(
 
 					// Save the trial time
 					trialTimes[difficulty].push(trialStopTime - trialStartTime);
+
+					// Check the amount of clicks
+					if (sumClicks() < 30) alert(
+							"You've completed the board in less than 30 clicks. You have earned a bonus");
+					if (sumClicks() > 38) alert(
+							"Please try to solve the next trials with fewer clicks");
 
 					// Log the trial data and times
 					//console.log("Trial time:  " +(trialStopTime - trialStartTime) + 'ms');

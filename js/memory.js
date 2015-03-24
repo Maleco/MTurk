@@ -92,6 +92,7 @@ function memoryFlipTile(tile, id){
 				 tile.innerHTML = '<div class="text">' + formulas[id] + '</div>'; 
 				 last_flipped_id = id;
 			}
+	 pauseComp(300);	
 	 }
 
 	 // Check if board is cleared
@@ -100,5 +101,4 @@ function memoryFlipTile(tile, id){
 			last_flipped_id = -1;
 			tiles_flipped = 0; 
 	 }
-
 } 
