@@ -13,6 +13,7 @@
 	 <div style="display: none;" id="user_age">		<?php echo htmlspecialchars($_POST["age"]); ?></div>
 	 <div style="display: none;" id="user_gender"><?php echo htmlspecialchars($_POST["gender"]); ?></div>
 	 <div style="display: none;" id="mturkID"><?php echo htmlspecialchars($_POST["mturkID"]); ?></div>
+	 <div style="display: none;" id="diffOrder"><?php echo htmlspecialchars($_POST["diffOrder"]); ?></div>
 	 <div id="mainContent" class="content" style="margin: 0 auto;">
 	 <h4 id="blockProgress"></h4>
 </div>

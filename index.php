@@ -11,7 +11,8 @@
 			<form id="form" method="post" action="too_young.php" class="form">
 				 <div id="mTurkID">
 						<h1>What's your MTurk Worker ID?</h1>
-						<h2>You can find it out at: https://www.mturk.com/mturk/dashboard</h2> 
+						<h2>You can find out at: https://www.mturk.com/mturk/dashboard</h2> 
+						<input type="hidden" id="diffOrder" name="diffOrder" value="<?php echo $_GET['order'] ?>">
 						<input type="text" name="mturkID" id="mturkID" size="20">
 				 </div>
 				 <div id="ageSection">

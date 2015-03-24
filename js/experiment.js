@@ -1,3 +1,11 @@
+/* TODO
+ * 	pay $2 + 0.10$ per completed trial with < 20 moves
+ * 	12 HIT'S - 2 for each possibility
+ * 	Instructions:
+ * 		takes 1 hour
+ * 		3 practice games: numbers, easy and medium
+ */
+
 /***********************************************************************
  * GLOBAL VARIABLES
  ***********************************************************************/
@@ -27,7 +35,7 @@ var difficulty;
 
 // Block time (ms) 
 //              minutes * seconds * ms
-var blockTime = 15      * 60      *  1000;
+var blockTime = 1       * 6       *  1000;
 
 // The Counters
 var blockCounter = -1;
@@ -42,7 +50,14 @@ var trialStartTime,trialStopTime;
 var trialTimes = { 1 : [],2 :[],3 :[] };
 
 // Randomize block order
-var diffOrder = shuffle([1, 2, 3]);
+var orders = [
+	[1, 2, 3],	
+	[1, 3, 2],	
+	[2, 1, 3],	
+	[2, 3, 1],	
+	[3, 1, 2],	
+	[3, 2, 1]	
+	];
 
 
 /***********************************************************************
@@ -141,6 +156,9 @@ $.when(
 		// Execute code
 		).done(function(){
 
+	var diffOrder = orders[Number(document.getElementById("diffOrder").textContent)];
+	console.log(diffOrder);
+
 	age = document.getElementById("user_age").textContent.trim();
 	gender = document.getElementById("user_gender").textContent.trim();
 	mturkID = document.getElementById("mturkID").textContent.trim();
@@ -179,8 +197,11 @@ $.when(
 
 					// Check if blockCounter has to be incremented 
 					// Increment if there is enough time for another average game
-					if (getBlockTime() + getAvgTrialTime(difficulty) >= blockTime )
+					if (getBlockTime() + (getAvgTrialTime(difficulty) / 2) >= blockTime )
 					{
+						alert(
+								"You've completed a block, feel free to take a break." +
+								"You can resume by clicking ok");
 						blockCounter++;
 						curBlockTime = new Date()
 						if (blockCounter < 3) difficulty = diffOrder[blockCounter];
@@ -202,6 +223,6 @@ $.when(
 					newBoard();
 					trialStartTime = new Date();
 				} 
-				$('h4').text("Current Block: " + blockCounter+1);
+				$('h4').text("Current Block: " + (blockCounter+1));
 			}, 300);
 });
