@@ -6,6 +6,7 @@ html {
 
 body {
 	 background-color: whitesmoke;
+	 margin: 0;
 }
 
 .content {
@@ -17,5 +18,9 @@ body {
 
 .content input {
 	 heigth: 32px;
+}
+
+h4 {
+	margin: 0px auto;
 }
 
