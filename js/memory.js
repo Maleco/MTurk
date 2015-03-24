@@ -76,6 +76,7 @@ function memoryFlipTile(tile, id){
 				 // Check if new flipped matches last flipped tile
 			{
 				 clearTiles(last_flipped_id, id);
+				 pauseComp(300);	
 			} else 
 				 // Else flip new tile
 			{
@@ -91,8 +92,8 @@ function memoryFlipTile(tile, id){
 				 tile.style.background = '#FFF'; 
 				 tile.innerHTML = '<div class="text">' + formulas[id] + '</div>'; 
 				 last_flipped_id = id;
+				 pauseComp(300);	
 			}
-	 pauseComp(300);	
 	 }
 
 	 // Check if board is cleared

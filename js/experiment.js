@@ -1,5 +1,4 @@
 /* TODO
- * 	Freeze the game after each click
  * 	pay $2 + 0.10$ per completed trial with < 30 moves
  * 	12 HIT'S - 2 for each possibility
  * 	Instructions:
@@ -203,9 +202,9 @@ $.when(
 					trialTimes[difficulty].push(trialStopTime - trialStartTime);
 
 					// Check the amount of clicks
-					if (sumClicks() < 30) alert(
+					if (sumClicks() < 30) alert("Number of clicks: " + sumClicks() + ". " +
 							"You've completed the board in less than 30 clicks. You have earned a bonus");
-					if (sumClicks() > 38) alert(
+					if (sumClicks() > 38) alert("Number of clicks: " + sumClicks() + ". " +
 							"Please try to solve the next trials with fewer clicks");
 
 					// Log the trial data and times
