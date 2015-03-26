@@ -12,7 +12,10 @@ body {
 .content {
 	 width: 700px;
 	 clear: both;
-	 margin: 10% auto;
+	 margin: 0 auto;
+}
+
+.content h1, .content h2, .content h3, .content h4, .content .form {
 	 text-align: center;
 }
 

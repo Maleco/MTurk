@@ -38,7 +38,7 @@ var difficulty;
 var blockTime = 1       * 6       *  1000;
 
 // The Counters
-var blockCounter = -1;
+var blockCounter = -4;
 var trialCounter = 0;
 
 
@@ -57,7 +57,7 @@ var orders = [
 	[2, 3, 1],	
 	[3, 1, 2],	
 	[3, 2, 1]	
-	];
+];
 
 
 /***********************************************************************
@@ -75,11 +75,11 @@ function formatTime(time) {
 }
 
 function pauseComp(millis)
- {
-  var date = new Date();
-  var curDate = null;
-  do { curDate = new Date(); }
-  while(curDate-date < millis);
+{
+	var date = new Date();
+	var curDate = null;
+	do { curDate = new Date(); }
+	while(curDate-date < millis);
 }
 // Return time in ms since start experiment 
 function getTime () { return new Date() - startTime; }
@@ -103,8 +103,8 @@ function getAvgTrialTime (difficulty)
 	return sum/counter
 }
 
-// Sum the number of clicks
-function sumClicks () {
+// Sum the number of steps
+function sumSteps () {
 	var sum = 0;
 	for (index = 0; index < tileClickCount.length ; index++)
 		sum += tileClickCount[index];
@@ -181,16 +181,50 @@ $.when(
 	// Loop for future boards
 	var refreshID = setInterval(function() 
 			{
-				// Set up first board
-				if(blockCounter == -1) 
+				// Set up the first intro board
+				if (blockCounter == -4) 
+				{
+					alert("Welcome to the experiment, you will now be presented with 3 introduction puzzles, no time or speed limits are set");
+					blockCounter++;
+					cleared = 0;
+					// Generate easy
+					generateFormulas(1); 
+					newBoard();
+					$('h4').text("Current Block: Practice 1 of 3");
+				}
+				else if (blockCounter == -3 && cleared == 1)
 				{
 					blockCounter++;
+					cleared = 0;
+					// Generate easy
+					generateFormulas(1); 
+					newBoard();
+					$('h4').text("Current Block: Practice 2 of 3");
+				}
+				else if (blockCounter == -2 && cleared == 1)
+				{
+					blockCounter++;
+					cleared = 0;
+					// Generate easy
+					generateFormulas(1); 
+					newBoard();
+					$('h4').text("Current Block: Practice 3 of 3");
+				}
+				// Set up first board
+				else if(blockCounter == -1 && cleared == 1) 
+				{
+					alert("The experiment will now begin, and we will record your speed and performance." +
+			"We would like to urge to complete puzzles as fast as possible while using as less steps as possible.");
+					blockCounter++;
+					cleared = 0;
+
 					difficulty = diffOrder[blockCounter];
 					generateFormulas(difficulty); 
 
 					newBoard();
 					curBlockTime = new Date()
-					trialStartTime = curBlockTime;
+						trialStartTime = curBlockTime;
+					$('h4').text("Current Block: " + (blockCounter+1));
 				} 
 				// Set up a new board
 				else if (cleared == 1 )
@@ -201,11 +235,11 @@ $.when(
 					// Save the trial time
 					trialTimes[difficulty].push(trialStopTime - trialStartTime);
 
-					// Check the amount of clicks
-					if (sumClicks() < 30) alert("Number of clicks: " + sumClicks() + ". " +
-							"You've completed the board in less than 30 clicks. You have earned a bonus");
-					if (sumClicks() > 38) alert("Number of clicks: " + sumClicks() + ". " +
-							"Please try to solve the next trials with fewer clicks");
+					// Check the amount of steps
+					if (sumSteps() < 30) alert("Number of steps " + sumSteps() + ". " +
+							"You've completed the board in less than 30 steps. You have earned a bonus");
+					if (sumSteps() > 38) alert("Number of steps " + sumSteps() + ". " +
+							"Please try to solve the next trials with fewer steps");
 
 					// Log the trial data and times
 					//console.log("Trial time:  " +(trialStopTime - trialStartTime) + 'ms');
@@ -225,7 +259,7 @@ $.when(
 								"You can resume by clicking ok");
 						blockCounter++;
 						curBlockTime = new Date()
-						if (blockCounter < 3) difficulty = diffOrder[blockCounter];
+							if (blockCounter < 3) difficulty = diffOrder[blockCounter];
 					}
 
 					// Stop 
@@ -243,7 +277,7 @@ $.when(
 					generateFormulas(difficulty); 
 					newBoard();
 					trialStartTime = new Date();
+					$('h4').text("Current Block: " + (blockCounter+1));
 				} 
-				$('h4').text("Current Block: " + (blockCounter+1));
 			}, 300);
 });
