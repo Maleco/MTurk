@@ -35,7 +35,7 @@ var difficulty;
 
 // Block time (ms) 
 //              minutes * seconds * ms
-var blockTime = 1       * 60      * 1000;
+var blockTime = 15      * 60      * 1000;
 
 // The Counters
 var blockCounter = -3;
