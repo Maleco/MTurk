@@ -11,7 +11,7 @@
  ***********************************************************************/
 
 // Logging to csv, columns:
-// Time (ms), Participant, P_Age, P_Gender, Difficulty, Block, Trialnr, Move, Card
+// Time (ms), Participant, P_Age, P_Gender, Difficulty, Block, Trialnr, Move, Card, Bonus counter
 // Move: 1 = newCard, 2 = Revisit, 3 = Match, 4 = Lucky Match, 5 = Focus lost, 6 = Focus gained
 var CSVdata = []
 
@@ -35,11 +35,12 @@ var difficulty;
 
 // Block time (ms) 
 //              minutes * seconds * ms
-var blockTime = 1       * 6       *  1000;
+var blockTime = 1       * 60      * 1000;
 
 // The Counters
-var blockCounter = -4;
+var blockCounter = -3;
 var trialCounter = 0;
+var bonusCounter = 0;
 
 
 var startTime = new Date();
@@ -74,12 +75,14 @@ function formatTime(time) {
 	return timeLog;
 }
 
-function pauseComp(millis)
+function pauseComp(milliseconds)
 {
-	var date = new Date();
-	var curDate = null;
-	do { curDate = new Date(); }
-	while(curDate-date < millis);
+ var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
 // Return time in ms since start experiment 
 function getTime () { return new Date() - startTime; }
@@ -88,7 +91,7 @@ function getBlockTime () { return new Date() - curBlockTime; }
 // Log the data to a csv
 function saveToCSV (action, cardID) {
 	if (!cardID) var cardID = "";
-	CSVdata.push([getTime(), mturkID, age, gender, difficulty, blockCounter, trialCounter, action, cardID]); 
+	CSVdata.push([getTime(), mturkID, age, gender, difficulty, blockCounter, trialCounter, action, cardID, bonusCounter]); 
 }
 
 // Get the average trial time
@@ -182,39 +185,29 @@ $.when(
 	var refreshID = setInterval(function() 
 			{
 				// Set up the first intro board
-				if (blockCounter == -4) 
+				if (blockCounter == -3) 
 				{
-					alert("Welcome to the experiment, you will now be presented with 3 introduction puzzles, no time or speed limits are set");
+					alert("Welcome to the experiment, you will now be presented with 2 introduction puzzles.");
 					blockCounter++;
 					cleared = 0;
 					// Generate easy
 					generateFormulas(1); 
 					newBoard();
-					$('h4').text("Current Block: Practice 1 of 3");
-				}
-				else if (blockCounter == -3 && cleared == 1)
-				{
-					blockCounter++;
-					cleared = 0;
-					// Generate easy
-					generateFormulas(1); 
-					newBoard();
-					$('h4').text("Current Block: Practice 2 of 3");
+					$('h4').text("Current Block: Practice 1 of 2");
 				}
 				else if (blockCounter == -2 && cleared == 1)
 				{
 					blockCounter++;
 					cleared = 0;
-					// Generate easy
-					generateFormulas(1); 
+					// Generate medium
+					generateFormulas(2); 
 					newBoard();
-					$('h4').text("Current Block: Practice 3 of 3");
+					$('h4').text("Current Block: Practice 2 of 2");
 				}
 				// Set up first board
 				else if(blockCounter == -1 && cleared == 1) 
 				{
-					alert("The experiment will now begin, and we will record your speed and performance." +
-			"We would like to urge to complete puzzles as fast as possible while using as less steps as possible.");
+					alert("The real experiment will now begin. We would like to urge you to complete puzzles in as few steps as possible.");
 					blockCounter++;
 					cleared = 0;
 
@@ -224,7 +217,7 @@ $.when(
 					newBoard();
 					curBlockTime = new Date()
 						trialStartTime = curBlockTime;
-					$('h4').text("Current Block: " + (blockCounter+1));
+					$('h4').text("Current Block: " + (blockCounter+1) + ", Current Bonus: $" + (0.10*bonusCounter).toFixed(2));
 				} 
 				// Set up a new board
 				else if (cleared == 1 )
@@ -236,10 +229,18 @@ $.when(
 					trialTimes[difficulty].push(trialStopTime - trialStartTime);
 
 					// Check the amount of steps
-					if (sumSteps() < 30) alert("Number of steps " + sumSteps() + ". " +
-							"You've completed the board in less than 30 steps. You have earned a bonus");
-					if (sumSteps() > 38) alert("Number of steps " + sumSteps() + ". " +
-							"Please try to solve the next trials with fewer steps");
+					if (sumSteps() < 30) 
+					{
+						 alert("Number of steps " + sumSteps() + ". " +
+									 "You've completed the board in less than 30 steps. You have earned a bonus");
+						 bonusCounter++;
+					}
+					if (sumSteps() > 38) 
+					{
+						 alert("Number of steps " + sumSteps() + ". " +
+									 "Please try to solve the next puzzles with fewer steps");
+						 if (bonusCounter > 0) bonusCounter--;
+					}
 
 					// Log the trial data and times
 					//console.log("Trial time:  " +(trialStopTime - trialStartTime) + 'ms');
@@ -277,7 +278,7 @@ $.when(
 					generateFormulas(difficulty); 
 					newBoard();
 					trialStartTime = new Date();
-					$('h4').text("Current Block: " + (blockCounter+1));
+					$('h4').text("Current Block: " + (blockCounter+1) + ", Current Bonus: $" + (0.10*bonusCounter).toFixed(2));
 				} 
 			}, 300);
 });
