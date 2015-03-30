@@ -229,11 +229,11 @@ $.when(
 					trialTimes[difficulty].push(trialStopTime - trialStartTime);
 
 					// Check the amount of steps
-					if (sumSteps() < 30) 
+					if (sumSteps() > 15 && sumSteps() < 30) 
 					{
 						 alert("Number of steps " + sumSteps() + ". " +
 									 "You've completed the board in less than 30 steps. You have earned a bonus");
-						 bonusCounter++;
+						 if (bonusCounter < bonusCounter++;
 					}
 					if (sumSteps() > 38) 
 					{

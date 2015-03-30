@@ -12,7 +12,7 @@
 			<p>
 			During this experiment you will be presented with a number of Concentration puzzle games.
 			The puzzle games will be presented to you in three blocks.
-			each block lasts about 15 minutes.
+			Each block lasts about 15 minutes.
 			An alert will be presented after completion of a block, 
 			at which you can take a small break.
 			We would like to urge you to complete the puzzles 
