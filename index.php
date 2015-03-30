@@ -20,6 +20,7 @@
 			</p>
 			<p>
 			Prior to the actual experiment, you will be presented two introductory puzzles.
+			The total experiment will take about 1 hour.
 
 			<h3>Concentration</h3>
 			Concentration, also known as Memory, Pelmanism, Shinkei-suijaku, Pexeso or simply Pairs,
@@ -37,11 +38,11 @@
 			match with 'X + 2 = 7'.
 
 			<h3>Payment</h3>
-			Completing the experiment will result in a payment of $2.00 + bonuses.
+			Completing the experiment will result in a payment of $1.50 + bonuses.
 			A bonus of $0.10 is <b>earned</b> for each puzzle solved in fewer than 30 steps.
 			For each game solved in more than 38 steps, $0.10 is <b>subtracted</b>
 			from your bonus. You can earn a maximum bonus of $3.00, 
-			resulting in a <b>maximum payment of $5.00</b>.
+			resulting in a <b>maximum payment of $4.50</b>.
 			<br>
 			<br>
 			<h4>IMPORTANT: Games have to be solved in fewer than 38 steps ON AVERAGE. If you take more steps, you will NOT be paid.<h4>
