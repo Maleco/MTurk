@@ -44,7 +44,9 @@
 			resulting in a <b>maximum payment of $5.00</b>.
 			<br>
 			<br>
-			<h4>IMPORTANT: Games have to be solved in fewer than 38 steps ON AVERAGE. If you take more steps, you will NOT be paid.<h4>
+			<h4>IMPORTANT: Games have to be solved in fewer than 38 steps ON AVERAGE. If you take more steps, you will NOT be paid.</h4>
+			<br>
+			<h4>IMPORTANT: Only completed experiments will receive payment.</h4>
 
 			<h3>After completion</h3>
 			As stated in the HIT, after completion of this experiment a unique code is generated,

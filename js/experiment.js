@@ -42,6 +42,9 @@ var blockCounter = -3;
 var trialCounter = 0;
 var bonusCounter = 0;
 
+// Max bonus = x * 0.10
+maxBonus = 30;
+
 
 var startTime = new Date();
 var curBlockTime;
@@ -233,7 +236,7 @@ $.when(
 					{
 						 alert("Number of steps " + sumSteps() + ". " +
 									 "You've completed the board in less than 30 steps. You have earned a bonus");
-						 if (bonusCounter < bonusCounter++;
+						 if (bonusCounter < maxBonus) bonusCounter++;
 					}
 					if (sumSteps() > 38) 
 					{
