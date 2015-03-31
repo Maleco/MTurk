@@ -43,7 +43,7 @@ var trialCounter = 0;
 var bonusCounter = 0;
 
 // Max bonus = x * 0.10
-maxBonus = 30;
+maxBonus = 40;
 
 
 var startTime = new Date();
@@ -220,7 +220,10 @@ $.when(
 					newBoard();
 					curBlockTime = new Date()
 						trialStartTime = curBlockTime;
-					$('h4').text("Current Block: " + (blockCounter+1) + ", Current Bonus: $" + (0.10*bonusCounter).toFixed(2));
+					if (bonusCounter > maxBonus)
+						 $('h4').text("Current Block: " + (blockCounter+1) + ", Current Bonus: $" + (0.10*maxBonus).toFixed(2));
+					else 
+						 $('h4').text("Current Block: " + (blockCounter+1) + ", Current Bonus: $" + (0.10*bonusCounter).toFixed(2));
 				} 
 				// Set up a new board
 				else if (cleared == 1 )
@@ -236,7 +239,7 @@ $.when(
 					{
 						 alert("Number of steps " + sumSteps() + ". " +
 									 "You've completed the board in less than 30 steps. You have earned a bonus");
-						 if (bonusCounter < maxBonus) bonusCounter++;
+						 bonusCounter++;
 					}
 					if (sumSteps() > 38) 
 					{
@@ -281,7 +284,10 @@ $.when(
 					generateFormulas(difficulty); 
 					newBoard();
 					trialStartTime = new Date();
-					$('h4').text("Current Block: " + (blockCounter+1) + ", Current Bonus: $" + (0.10*bonusCounter).toFixed(2));
+					if (bonusCounter > maxBonus)
+						 $('h4').text("Current Block: " + (blockCounter+1) + ", Current Bonus: $" + (0.10*maxBonus).toFixed(2));
+					else 
+						 $('h4').text("Current Block: " + (blockCounter+1) + ", Current Bonus: $" + (0.10*bonusCounter).toFixed(2));
 				} 
 			}, 300);
 });
