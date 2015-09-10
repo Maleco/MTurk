@@ -1,0 +1,9 @@
+CREATE TABLE `henk` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mturk_id` char(20) NOT NULL,
+  `age` int(11) NOT NULL,
+  `gender` enum('m','f') DEFAULT NULL,
+  `salt` varchar(255) NOT NULL,
+  `hash` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1

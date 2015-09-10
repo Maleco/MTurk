@@ -1,0 +1,29 @@
+html {
+	 font-family: 'Open Sans', 'Arial', sans-serif;
+	 font-size: 18px;
+	 line-height: 1.6em;
+}
+
+body {
+	 background-color: whitesmoke;
+	 margin: 0;
+}
+
+.content {
+	 width: 700px;
+	 clear: both;
+	 margin: 0 auto;
+}
+
+.content h1, .content h2, .content h3, .content h4, .content .form {
+	 text-align: center;
+}
+
+.content input {
+	 heigth: 32px;
+}
+
+h4 {
+	margin: 0px auto;
+}
+
