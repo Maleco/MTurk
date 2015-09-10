@@ -24,7 +24,7 @@ function newBoard(){
 			formulasAndXValues.push({"id": i, "formula": formulas[i], "xval": xvalues[i]});
 
 	 // Shuffle the order
-	 formulasAndXValues = shuffle(formulasAndXValues);
+	 //formulasAndXValues = shuffle(formulasAndXValues);
 
 	 var output = ''; 
 	 for(var i = 0; i < formulas.length; i++)
