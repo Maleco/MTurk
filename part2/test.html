@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Spot the Difference Game</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+
+<!-- Call Jquery -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+<body>
+<canvas class="canvas" id="canvas1" width="800" height="400" style="margin: 0 auto"></canvas>
+<hr />
+<canvas class="canvas" id="canvas2" width="800" height="400" style="margin: 0 auto"></canvas>
+</body>
+<script>
+function randomRange(min, max)  {
+  var range = (max-min) + 1;
+  var rand = Math.floor( Math.random()*range );
+  return min+rand;
+}
+function randomGrey() {
+  var s = "#";
+  var grey = randomRange(0,8).toString(16);
+
+  while(s.length < 7) {
+    s+=grey;
+  }
+
+  return s;
+}
+
+var canvas = document.getElementById('canvas1');
+console.log($(window).width());
+var context = canvas.getContext('2d');
+var canvas2 = document.getElementById('canvas2');
+var context2 = canvas2.getContext('2d');
+
+var objects = [];
+
+var drawCircle = function (context, x, y, fillcolor, radius) {
+    context.beginPath();
+    context.arc(x, y, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = fillcolor;
+    context.fill();
+};
+
+var Circle = function(x, y, radius, fillcolor) {
+    this.type = "circle";
+		this.x = x;
+		this.y = y;
+		this.radius = radius;
+		this.fillcolor = fillcolor
+    this.left = x - radius;
+    this.top = y - radius;
+    this.right = x + radius;
+    this.bottom = y + radius;
+};
+
+var drawNewCircle = function (context, x, y, fillcolor, radius) {
+    drawCircle(context, x, y, fillcolor, radius);
+    var circle = new Circle(x, y, radius, fillcolor);
+    objects.push(circle);  
+};
+
+// Draw the shapes
+for (i = 0; i < 4; ++i) {
+	// Keep 50px clear of each edge
+	posX = randomRange(50, canvas.width-50)
+	posY = randomRange(50, canvas.height-50)
+	fillcolor = randomGrey();
+	radius = randomRange(10,50);
+
+	drawNewCircle(context, posX, posY, fillcolor, radius);
+	//drawNewCircle(context2, posX, posY, fillcolor, radius);
+}
+
+//drawNewCircle(context, 300, canvas.height / 2, "green", 40);
+//drawNewCircle(context, 600, canvas.height / 3, "blue", 50);
+</script>
+<script>
+
+for (i = 0; i < objects.length-1; ++i) {
+	var obj = objects[i];
+	if (obj.type == "circle") {
+		drawCircle(context2, obj.x, obj.y, obj.fillcolor, obj.radius);
+	}
+}
+// Draw the last shape slightly different
+var last = objects[objects.length-1];
+if (last.type == "circle") {
+	last.radius = last.radius*(randomRange(0.5,1.5));
+	last.left = last.x - last.radius;
+	last.top = last.y - last.radius;
+	last.right = last.x + last.radius;
+	last.bottom = last.y + last.radius;
+	drawCircle(context2, last.x, last.y, last.fillcolor, last.radius);
+			}
+
+$('#canvas2').click(function (e) {
+    var clickedX = e.pageX - this.offsetLeft;
+    var clickedY = e.pageY - this.offsetTop;
+
+		if (clickedX < last.right && clickedX > last.left && clickedY > last.top && clickedY < last.bottom) {
+			alert ('clicked the different circle');
+		}
+});
+</script>
+
+</html>
