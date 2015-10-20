@@ -182,11 +182,11 @@ $.when(
 
 	var diffOrder = orders[Number(document.getElementById("diffOrder").textContent)];
 	console.log(diffOrder);
-	console.lot("test");
+	console.log("test");
 
-	age = document.getElementById("user_age").textContent.trim();
-	gender = document.getElementById("user_gender").textContent.trim();
-	mturkID = document.getElementById("mturkID").textContent.trim();
+//	age = document.getElementById("user_age").textContent.trim();
+//	gender = document.getElementById("user_gender").textContent.trim();
+//	mturkID = document.getElementById("mturkID").textContent.trim();
 
 	// Loop for future boards
 	var refreshID = setInterval(function() 
