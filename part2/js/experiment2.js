@@ -180,13 +180,14 @@ $.when(
 		// Execute code
 		).done(function(){
 
-	age = document.getElementById("user_age").textContent.trim();
-	gender = document.getElementById("user_gender").textContent.trim();
-	mturkID = document.getElementById("mturkID").textContent.trim();
-	numFiles  = Number(document.getElementById("numFiles").textContent);
-	console.log(numFiles);
-	var diffOrder = orders[numFiles % 6]
+	var diffOrder = orders[Number(document.getElementById("diffOrder").textContent)];
 	console.log(diffOrder);
+	console.log("test");
+
+//	age = document.getElementById("user_age").textContent.trim();
+//	gender = document.getElementById("user_gender").textContent.trim();
+//	mturkID = document.getElementById("mturkID").textContent.trim();
+
 	// Loop for future boards
 	var refreshID = setInterval(function() 
 			{
