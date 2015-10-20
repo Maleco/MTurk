@@ -7,6 +7,13 @@
 	 <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
 </head>
 <body>
+<?php 
+// Directory
+ $directory = "output";
+// // Count number of files and store them to variable..
+ $fi = new FilesystemIterator($directory, FilesystemIterator::SKIP_DOTS);
+ $count = iterator_count($fi)-1
+?> 
 	 <div id="mainContent" class="content">
 			<form id="form" method="post" action="too_young.php" class="form">
 				 <div id="mTurkID">
@@ -14,7 +21,7 @@
 						You can find out at: https://www.mturk.com/mturk/dashboard 
 						<br>
 						<br>
-						<input type="hidden" id="diffOrder" name="diffOrder" value="<?php echo $_POST['diffOrder'] ?>">
+						<input type="hidden" id="numFiles" name="numFiles" value="<?php echo $count ?>">
 						MTurk Worker ID:<input type="text" name="mturkID" id="mturkID" size="20">
 						<br>
 				 </div>

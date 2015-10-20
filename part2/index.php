@@ -43,24 +43,10 @@
 			and we will process your payment.
 			This is usually done within 5 working days.
 			<br>
-<?php 
-//$fi = new FilesystemIterator('../results', FilesystemIterator::SKIP_DOTS);
-// Directory
- $directory = "../output";
-//
-// // Returns array of files
- $files = scandir($directory);
-//
-// // Count number of files and store them to variable..
- $num_files = count($files)-2;
-
-echo "There were " . $num_files . " files in the dir";
-?> 
 			<br>
 			<br>
-			<form id="form" method="post" action="intro.php" class="form">
-				 <input type="hidden" id="diffOrder" name="diffOrder" value="<?php echo $_GET['order'] ?>">
-				 <button type="submit" form="form" value="Submit">Take me to the experiment</button>
+			<form method="post" action="intro.php" class="form">
+				 <button>Take me to the experiment</button>
 			</div>
 			<br>
 			<br>

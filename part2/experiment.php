@@ -12,7 +12,7 @@
 	 <div style="display: none;" id="user_age">		<?php echo htmlspecialchars($_POST["age"]); ?></div>
 	 <div style="display: none;" id="user_gender"><?php echo htmlspecialchars($_POST["gender"]); ?></div>
 	 <div style="display: none;" id="mturkID"><?php echo htmlspecialchars($_POST["mturkID"]); ?></div>
-	 <div style="display: none;" id="diffOrder"><?php echo htmlspecialchars($_POST["diffOrder"]); ?></div>
+	 <div style="display: none;" id="numFiles"><?php echo htmlspecialchars($_POST["numFiles"]); ?></div>
 <?php
 // create a temp file for this user
  $my_file = 'output/' . htmlspecialchars($_POST["mturkID"]) . '.tmp';
